@@ -1,0 +1,8 @@
+<h1>See below for post details for the <%= @category.name %> category: </h1>
+    <% @category.post_categories.each do |pc| %>
+        <h3>Title: <%= link_to pc.post.title, post_path(pc.post) %></h3>
+        <h3>Post Content: </h3>
+        <%= pc.post.content %>
+    <% end %>
+ 
+   
