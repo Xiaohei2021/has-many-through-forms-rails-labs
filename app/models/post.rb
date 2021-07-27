@@ -5,23 +5,23 @@ class Post < ActiveRecord::Base
   # #post_categories <<
   # #post_categories.delete
   # #post_category_ids = ids
-
   has_many :categories, through: :post_categories #all this does is add methods
   #what methods
 
   has_many :comments
-  
   has_many :users, through: :comments
 
-  accepts_nested_attributes_for :categories, :comments
+  accepts_nested_attributes_for :categories
 
   def categories_attributes=(category_attributes)
     # byebug
     category_attributes.values.each do |category_attribute|
-      category = Category.find_or_create_by(category_attribute)
-      self.categories << category
+      #  byebug
+      unless category_attribute[:name].blank?      
+        category = Category.find_or_create_by(category_attribute)
+        self.categories << category
+      end
     end
   end
 
 end
-  

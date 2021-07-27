@@ -12,12 +12,16 @@
 </ul><hr><br>
 
 
-comments:
-
+<ul>
 <% @post.comments.each do |comment| %>
-    <%= comment.content %><br><hr>
-<% end %><br><hr>
+    <li>
+    <%= comment.user.username %> says: <%= comment.content %><hr>
+    </li>
+<% end %></ul>
 
+<% @post.users.uniq.each do |user|%>
+    <%= link_to user.username, user_path(user) %>
+<% end %>
 
 
 <%= form_for @comment do |c| %>
@@ -36,5 +40,6 @@ comments:
     <%= c.hidden_field :post_id, value: @post.id %> 
     <%= c.submit %><br>
 
-<% end %>
+<% end %><hr><br>
+
 
