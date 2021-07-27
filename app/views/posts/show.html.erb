@@ -3,28 +3,38 @@
 <h5>Title:</h5> <p><%= @post.title %></p><hr>
 <h5>Content:</h5> <%= @post.content %><hr>
 
-<% @post.post_categories.each do |pstc|%>
-    <h5>Category:</h5>
-    <%= link_to pstc.category.name, category_path(pstc.category) %>
-<% end %><hr>
 
-
-<%= form_for @comment do |cmt| %>
-
-    <%= cmt.label "From username:" %><br>
-    <%= cmt.collection_select :user_id, User.all, :id, :username %><br>
-
-    <%= cmt.label "Content:" %><br>
-    <%= cmt.text_area :content %><br><br>
-
-  
-    <%= cmt.submit %><br>
+<h5>Category: </h5>
+<ul>
+<% @post.categories.each do |category|%>
+  <li><%= link_to category.name, category_path(category) %> </li>
 <% end %>
+</ul><hr><br>
+
+
+comments:
 
 <% @post.comments.each do |comment| %>
-    
-    <%= comment.user.username  %>
-    <%= comment.content %>
+    <%= comment.content %><br><hr>
+<% end %><br><hr>
+
+
+
+<%= form_for @comment do |c| %>
+
+    <%= c.label "From username:" %><br>
+    <%= c.collection_select :user_id, User.all, :id, :username %><br>
+
+    <%= c.label "Comment:" %><br>
+    <%= c.text_area :content %><br><br>
+
+    <%= c.fields_for :user, @post.users.build do |user_fields| %>
+        <%= user_fields.label "UserName:" %><br>
+        <%= user_fields.text_field :username %><br>
+    <% end %><br>
+
+    <%= c.hidden_field :post_id, value: @post.id %> 
+    <%= c.submit %><br>
 
 <% end %>
 

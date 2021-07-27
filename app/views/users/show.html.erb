@@ -1,5 +1,5 @@
 
-<% @user.comments.each do |uc| %>
-    <%= link_to uc.post.title, post_path(uc.post) %>
+<% @user.posts.each do |post| %>
+    <%= link_to post.title, post_path(post) %>
 <% end %>
 
